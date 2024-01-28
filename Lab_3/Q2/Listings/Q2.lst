@@ -1,0 +1,67 @@
+A51 MACRO ASSEMBLER  Q2                                                                   01/28/2024 16:46:58 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\Q2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE Q2.asm SET(SMALL) DEBUG PRINT(.\Listings\Q2.lst) OBJECT(.\Objects\Q2.ob
+                      j) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+0100                   4     MAIN:
+0100 759001            5     MOV P1, #01H
+0103 3130              6     CALL delay_5s
+0105 759000            7     MOV P1, #00H
+0108 80FE              8     HERE: SJMP HERE
+0130                   9     ORG 130H
+                      10     
+0130                  11     delay_5s:
+0130 C000             12     PUSH 00H
+0132 78C8             13     MOV R0, #200
+0134 313B             14     H3: ACALL delay_1ms
+0136 D8FC             15     DJNZ R0, H3
+0138 D000             16     POP 00H
+013A 22               17     RET
+                      18     
+013B                  19     delay_1ms:
+013B C000             20     PUSH 00H
+013D 7864             21     MOV R0, #100
+013F 3146             22     H2: ACALL delay_250us
+0141 D8FC             23     DJNZ R0, H2
+0143 D000             24     POP 00H
+0145 22               25     RET
+                      26     
+0146                  27     delay_250us:
+0146 C000             28     PUSH 00H
+0148 78F4             29     MOV R0, #244
+014A D8FE             30     H1: DJNZ R0, H1
+014C D000             31     POP 00H
+014E 22               32     RET
+                      33     
+                      34     END
+A51 MACRO ASSEMBLER  Q2                                                                   01/28/2024 16:46:58 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+DELAY_1MS. . . . .  C ADDR   013BH   A   
+DELAY_250US. . . .  C ADDR   0146H   A   
+DELAY_5S . . . . .  C ADDR   0130H   A   
+H1 . . . . . . . .  C ADDR   014AH   A   
+H2 . . . . . . . .  C ADDR   013FH   A   
+H3 . . . . . . . .  C ADDR   0134H   A   
+HERE . . . . . . .  C ADDR   0108H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

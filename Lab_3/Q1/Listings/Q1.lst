@@ -1,0 +1,79 @@
+A51 MACRO ASSEMBLER  Q1                                                                   01/28/2024 16:37:20 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\Q1.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE Q1.asm SET(SMALL) DEBUG PRINT(.\Listings\Q1.lst) OBJECT(.\Objects\Q1.ob
+                      j) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+0100                   4     MAIN:
+0100 3130              5     CALL MAC
+0102 80FE              6     HERE: SJMP HERE
+0130                   7     ORG 130H
+                       8     
+0130                   9     MAC:
+                      10     
+                      11     
+                      12     
+0130 E570             13     MOV A, 70H  
+0132 8573F0           14     MOV B, 73H  
+0135 A4               15     MUL AB  
+                      16     
+0136 F8               17     MOV R0, A  
+0137 A9F0             18     MOV R1, B  
+                      19     
+0139 E571             20     MOV A, 71H  
+013B 8574F0           21     MOV B, 74H  
+013E A4               22     MUL AB  
+013F 755000           23     MOV 50H, #00H
+0142 120153           24     LCALL ADD16
+                      25     
+0145 E572             26     MOV A, 72H  
+0147 8575F0           27     MOV B, 75H  
+014A A4               28     MUL AB  
+                      29     
+014B A852             30     MOV R0, 52H
+014D A951             31     MOV R1, 51H
+014F 120153           32     LCALL ADD16
+0152 22               33     RET
+                      34     
+0153                  35     ADD16:
+                      36     
+0153 C3               37     CLR C
+0154 28               38     ADD A, R0
+0155 F552             39     MOV 52H, A
+                      40     
+0157 E5F0             41     MOV A, B
+0159 39               42     ADDC A, R1
+015A F551             43     MOV 51H, A
+                      44     
+015C 5002             45     JNC ABC
+015E 0550             46     INC 50H
+0160 22               47     ABC:RET
+                      48     
+                      49     END
+A51 MACRO ASSEMBLER  Q1                                                                   01/28/2024 16:37:20 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+ABC. . . . . . . .  C ADDR   0160H   A   
+ADD16. . . . . . .  C ADDR   0153H   A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+HERE . . . . . . .  C ADDR   0102H   A   
+MAC. . . . . . . .  C ADDR   0130H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

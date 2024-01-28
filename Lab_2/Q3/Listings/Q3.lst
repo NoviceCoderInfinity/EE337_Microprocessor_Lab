@@ -1,0 +1,61 @@
+A51 MACRO ASSEMBLER  Q3                                                                   01/23/2024 16:04:38 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\Q3.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE Q3.asm SET(SMALL) DEBUG PRINT(.\Listings\Q3.lst) OBJECT(.\Objects\Q3.ob
+                      j) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     
+0000                   2     ORG 0H
+0000 020100            3     LJMP MAIN
+0100                   4     ORG 100H
+0100                   5     MAIN:
+0100 120130            6     lCALL MAX
+0103                   7     HERE: 
+0103 8B70              8     mov 70h, r3
+0105 80FC              9     SJMP HERE
+0130                  10     ORG 130H
+                      11     
+0130                  12     MAX:
+0130 7860             13             MOV R0, #60H
+0132 AB60             14             mov r3, 60h
+                      15             
+0134 7908             16             MOV r1, #08h
+0136                  17             LOOP:   
+0136 19               18             DEC r1
+0137 E9               19             mov a, r1
+0138 60C9             20             jz here
+                      21             
+013A 08               22             inc r0
+013B E6               23             mov a, @r0
+013C C3               24             clr c
+013D F5F0             25             mov b, a
+013F 9B               26             subb a, r3
+0140 40F4             27             JC LOOP
+0142 ABF0             28             mov r3, b
+0144 80F0             29             jmp LOOP
+                      30             
+                      31     
+                      32     END
+A51 MACRO ASSEMBLER  Q3                                                                   01/23/2024 16:04:38 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+HERE . . . . . . .  C ADDR   0103H   A   
+LOOP . . . . . . .  C ADDR   0136H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+MAX. . . . . . . .  C ADDR   0130H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
