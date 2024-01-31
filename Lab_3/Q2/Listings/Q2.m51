@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    01/28/2024  16:48:17  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    01/30/2024  01:47:41  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
@@ -19,7 +19,7 @@ LINK MAP OF MODULE:  .\Objects\Q2 (Q2)
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
-            CODE    0000H     014FH     ABSOLUTE     
+            CODE    0000H     015AH     ABSOLUTE     
 
 
 
@@ -29,45 +29,54 @@ SYMBOL TABLE OF MODULE:  .\Objects\Q2 (Q2)
   ----------------------------------
 
   -------         MODULE        Q2
-  C:013BH         SYMBOL        DELAY_1MS
-  C:0146H         SYMBOL        DELAY_250US
-  C:0130H         SYMBOL        DELAY_5S
-  C:014AH         SYMBOL        H1
-  C:013FH         SYMBOL        H2
-  C:0134H         SYMBOL        H3
-  C:0108H         SYMBOL        HERE
+  C:0130H         SYMBOL        ADDER
+  C:0146H         SYMBOL        DELAY_1MS
+  C:0151H         SYMBOL        DELAY_250US
+  C:013BH         SYMBOL        DELAY_5S
+  C:0155H         SYMBOL        H1
+  C:014AH         SYMBOL        H2
+  C:013FH         SYMBOL        H3
+  C:0134H         SYMBOL        H4
+  C:010AH         SYMBOL        HERE
   C:0100H         SYMBOL        MAIN
   D:0090H         SYMBOL        P1
   C:0000H         LINE#         2
   C:0100H         LINE#         5
   C:0103H         LINE#         6
   C:0105H         LINE#         7
-  C:0108H         LINE#         8
-  C:0130H         LINE#         12
-  C:0132H         LINE#         13
-  C:0134H         LINE#         14
-  C:0136H         LINE#         15
-  C:0138H         LINE#         16
-  C:013AH         LINE#         17
-  C:013BH         LINE#         20
-  C:013DH         LINE#         21
-  C:013FH         LINE#         22
-  C:0141H         LINE#         23
-  C:0143H         LINE#         24
-  C:0145H         LINE#         25
-  C:0146H         LINE#         28
-  C:0148H         LINE#         29
-  C:014AH         LINE#         30
-  C:014CH         LINE#         31
-BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  01/28/2024  16:48:17  PAGE 2
+  C:0107H         LINE#         8
+  C:010AH         LINE#         9
+  C:0130H         LINE#         13
+  C:0132H         LINE#         14
+  C:0134H         LINE#         15
+  C:0136H         LINE#         16
+  C:0138H         LINE#         17
+  C:013AH         LINE#         18
+  C:013BH         LINE#         21
+  C:013DH         LINE#         22
+  C:013FH         LINE#         23
+  C:0141H         LINE#         24
+  C:0143H         LINE#         25
+  C:0145H         LINE#         26
+  C:0146H         LINE#         29
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  01/30/2024  01:47:41  PAGE 2
 
 
-  C:014EH         LINE#         32
+  C:0148H         LINE#         30
+  C:014AH         LINE#         31
+  C:014CH         LINE#         32
+  C:014EH         LINE#         33
+  C:0150H         LINE#         34
+  C:0151H         LINE#         37
+  C:0153H         LINE#         38
+  C:0155H         LINE#         39
+  C:0157H         LINE#         40
+  C:0159H         LINE#         41
   -------         ENDMOD        Q2
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 002CH BYTE ( 2%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0039H BYTE ( 2%) *
 ******************************************************************************
 
-Program Size: data=8.0 xdata=0 code=335
+Program Size: data=8.0 xdata=0 code=346
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

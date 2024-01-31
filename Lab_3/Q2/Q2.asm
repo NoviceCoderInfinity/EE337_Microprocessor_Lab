@@ -4,9 +4,18 @@ ORG 100H
 MAIN:
 MOV P1, #01H
 CALL delay_5s
+CALL adder
 MOV P1, #00H
 HERE: SJMP HERE
 ORG 130H
+
+adder:
+PUSH 00H
+MOV R0, #20H
+H4: ACALL delay_250us
+DJNZ R0, H4
+POP 00H
+RET
 
 delay_5s:
 PUSH 00H

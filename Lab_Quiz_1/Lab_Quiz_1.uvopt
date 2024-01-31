@@ -140,7 +140,7 @@
         <Mm>
           <WinNumber>1</WinNumber>
           <SubType>0</SubType>
-          <ItemText>D:50h</ItemText>
+          <ItemText>D:50H</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow1>
@@ -202,8 +202,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Q1.asm</PathWithFileName>
-      <FilenameWithoutPath>Q1.asm</FilenameWithoutPath>
+      <PathWithFileName>.\temp.asm</PathWithFileName>
+      <FilenameWithoutPath>temp.asm</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
