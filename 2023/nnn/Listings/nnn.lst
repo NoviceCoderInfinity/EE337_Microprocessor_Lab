@@ -1,0 +1,58 @@
+A51 MACRO ASSEMBLER  NNN                                                                  02/06/2024 15:01:38 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\nnn.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE nnn.asm SET(SMALL) DEBUG PRINT(.\Listings\nnn.lst) OBJECT(.\Objects\nnn
+                      .obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+0100                   4     MAIN:
+0100 759001            5     MOV P1, #01H
+0103 3130              6     CALL delay_1ms
+0105 759000            7     MOV P1, #00H
+0108 80FE              8     HERE: SJMP HERE
+0130                   9     ORG 130H
+                      10     
+                      11     
+0130                  12     delay_1ms:
+0130 C000             13     push 00h
+0132 7804             14     mov r0, #4
+0134 313B             15     h2: acall delay_250us
+0136 D8FC             16     djnz r0, h2
+0138 D000             17     pop 00h
+013A 22               18     ret
+013B                  19     delay_250us:
+013B C000             20     push 00h
+013D 78F4             21     mov r0, #244
+013F D8FE             22     h1: djnz r0, h1
+0141 D000             23     pop 00h
+0143 22               24     ret
+                      25     
+0144 22               26     RET
+                      27     END
+A51 MACRO ASSEMBLER  NNN                                                                  02/06/2024 15:01:38 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+DELAY_1MS. . . . .  C ADDR   0130H   A   
+DELAY_250US. . . .  C ADDR   013BH   A   
+H1 . . . . . . . .  C ADDR   013FH   A   
+H2 . . . . . . . .  C ADDR   0134H   A   
+HERE . . . . . . .  C ADDR   0108H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

@@ -1,0 +1,289 @@
+A51 MACRO ASSEMBLER  Q                                                                    02/06/2024 15:35:36 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\Q.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE Q.asm SET(SMALL) DEBUG PRINT(.\Listings\Q.lst) OBJECT(.\Objects\Q.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+                       4     
+0100                   5     MAIN:
+0100 3130              6     ACALL TAKE_INP
+0102 31B4              7     ACALL QUANT_ENC
+0104 5145              8     loop: ACALL LED_DISP
+0106 80FC              9     JMP loop
+                      10      
+0108 80FE             11     HERE: SJMP HERE
+                      12     
+0130                  13     ORG 130H
+                      14     
+0130                  15     TAKE_INP:
+                      16             
+0130 75901F           17             MOV P1, #1FH  
+0133 515A             18             ACALL delay_8s
+0135 E590             19             MOV A, P1
+0137 75F010           20             MOV B, #16
+013A A4               21             MUL AB  
+013B F500             22             MOV 00H, A
+013D C294             23             CLR P1.4
+013F D295             24             SETB P1.5
+0141 515A             25             ACALL delay_8s
+0143 E590             26             MOV A, P1
+0145 6420             27             XRL A, #20H
+0147 2500             28             ADD A, 00H
+0149 F500             29             MOV 00H, A
+                      30     
+                      31             
+014B D294             32             SETB P1.4
+014D D295             33             SETB P1.5
+014F 515A             34             ACALL delay_8s
+0151 E590             35             MOV A, P1
+0153 75F010           36             MOV B, #16
+0156 A4               37             MUL AB
+0157 F501             38             MOV 01H, A
+0159 C294             39             CLR P1.4
+015B C295             40             CLR P1.5
+015D D296             41             SETB P1.6
+015F 515A             42             acall delay_8s
+0161 E590             43             MOV A, P1
+0163 6440             44             XRL A, #40H 
+0165 2501             45             ADD A, 01H
+0167 F501             46             MOV 01H, A
+                      47     
+                      48             
+0169 D294             49             SETB P1.4
+016B C295             50             CLR P1.5
+016D D296             51             SETB P1.6
+016F 515A             52             ACALL delay_8s
+0171 E590             53             MOV A, P1
+0173 75F010           54             MOV B, #10H
+0176 A4               55             MUL AB
+0177 F502             56             MOV 02H, A
+0179 C294             57             CLR P1.4
+017B D295             58             SETB P1.5
+A51 MACRO ASSEMBLER  Q                                                                    02/06/2024 15:35:36 PAGE     2
+
+017D D296             59             SETB P1.6
+017F 515A             60             ACALL delay_8s
+0181 E590             61             MOV A, P1
+0183 6460             62             XRL A, #60H
+0185 2502             63             ADD A, 02H
+0187 F502             64             MOV 02H, A
+                      65     
+                      66             
+0189 D294             67             SETB P1.4
+018B D295             68             SETB P1.5
+018D D296             69             SETB P1.6
+018F 515A             70             ACALL delay_8s
+0191 E590             71             MOV A, P1
+0193 75F010           72             MOV B, #10H
+0196 A4               73             MUL AB
+0197 F503             74             MOV 03H, A
+0199 C294             75             CLR P1.4
+019B C295             76             CLR P1.5
+019D C296             77             CLR P1.6
+019F D297             78             SETB P1.7
+01A1 515A             79             ACALL delay_8s
+01A3 E590             80             MOV A, P1
+01A5 6480             81             XRL A, #80H
+01A7 2503             82             ADD A, 03H
+01A9 F503             83             MOV 03H, A
+                      84             
+01AB C294             85             CLR P1.4
+01AD C295             86             CLR P1.5
+01AF C296             87             CLR P1.6
+01B1 C297             88             CLR P1.7
+01B3 22               89     RET
+                      90     
+01B4                  91     QUANT_ENC:
+                      92             
+01B4 E500             93             MOV A, 00H
+01B6 94C0             94             SUBB A, #0C0H
+01B8 501B             95             JNC out_1d
+                      96             
+01BA E500             97             MOV A, 00H
+01BC 9480             98             SUBB A, #80H
+01BE 5010             99             JNC out_1c
+                     100     
+01C0 E500            101             MOV A, 00H
+01C2 9440            102             SUBB A, #40H
+01C4 5005            103             JNC out_1b
+                     104     
+01C6 750410          105             MOV 04H, #10H 
+01C9 800D            106             JMP out_2
+01CB 750420          107             out_1b: MOV 04H, #20H 
+01CE 8008            108             JMP out_2
+01D0 750440          109             out_1c: MOV 04H, #40H 
+01D3 8003            110             JMP out_2
+01D5 750480          111             out_1d: MOV 04H, #80H 
+                     112     
+                     113             
+01D8                 114             out_2:
+01D8 E501            115             MOV A, 01H
+01DA 94C0            116             SUBB A, #0C0H
+01DC 501B            117             JNC out_2d
+                     118     
+01DE E501            119             MOV A, 01H
+01E0 9480            120             SUBB A, #80H
+01E2 5010            121             JNC out_2c
+                     122     
+01E4 E501            123             MOV A, 01H
+01E6 9440            124             SUBB A, #40H
+A51 MACRO ASSEMBLER  Q                                                                    02/06/2024 15:35:36 PAGE     3
+
+01E8 5005            125             JNC out_2b
+                     126     
+01EA 750510          127             MOV 05H, #10H 
+01ED 800D            128             JMP out_3
+01EF 750520          129             out_2b: MOV 05H, #20H 
+01F2 8008            130             JMP out_3
+01F4 750540          131             out_2c: MOV 05H, #40H 
+01F7 8003            132             JMP out_3
+01F9 750580          133             out_2d: MOV 05H, #80H 
+                     134     
+                     135             
+01FC                 136             out_3:
+01FC E502            137             MOV A, 02H
+01FE 94C0            138             SUBB A, #0C0H
+0200 501B            139             JNC out_3d
+                     140     
+0202 E502            141             MOV A, 02H
+0204 9480            142             SUBB A, #80H
+0206 5010            143             JNC out_3c
+                     144     
+0208 E502            145             MOV A, 02H
+020A 9440            146             SUBB A, #40H
+020C 5005            147             JNC out_3b
+                     148     
+                     149     
+020E 750610          150             MOV 06H, #10H 
+0211 800D            151             JMP out_4
+0213 750620          152             out_3b: MOV 06H, #20H 
+0216 8008            153             JMP out_4
+0218 750640          154             out_3c: MOV 06H, #40H 
+021B 8003            155             JMP out_4
+021D 750680          156             out_3d: MOV 06H, #80H 
+                     157     
+                     158             
+0220                 159             out_4: 
+0220 E503            160             MOV A, 03H
+0222 94C0            161             SUBB A, #0C0H
+0224 501B            162             JNC out_4d
+                     163     
+0226 E503            164             MOV A, 03H
+0228 9480            165             SUBB A, #80H
+022A 5010            166             JNC out_4c
+                     167     
+022C E503            168             MOV A, 03H
+022E 9440            169             SUBB A, #40H
+0230 5005            170             JNC out_4b
+                     171     
+0232 750710          172             MOV 07H, #10H 
+0235 800D            173             JMP out
+0237 750720          174             out_4b: MOV 07H, #20H 
+023A 8008            175             JMP out
+023C 750740          176             out_4c: MOV 07H, #40H 
+023F 8003            177             JMP out
+0241 750780          178             out_4d: MOV 07H, #80H 
+0244                 179             out:    
+0244 22              180     RET
+                     181     
+0245                 182     LED_DISP:
+0245 850490          183             MOV P1, 04H
+0248 5171            184             acall delay_4s
+                     185     
+024A 850590          186             MOV P1, 05H
+024D 5171            187             acall delay_4s
+                     188     
+024F 850690          189             MOV P1, 06H
+0252 5171            190             acall delay_4s
+A51 MACRO ASSEMBLER  Q                                                                    02/06/2024 15:35:36 PAGE     4
+
+                     191     
+0254 850790          192             MOV P1, 07H
+0257 5171            193             acall delay_4s
+0259 22              194     RET
+                     195      
+                     196     
+025A                 197     delay_8s:
+025A C016            198     push 16h
+025C C017            199     push 17h
+025E 7517A0          200     mov 17h, #0A0h
+0261 7516C8          201     f11: mov 16h, #0C8H
+0264 5188            202     h22: acall delay_250us
+0266 D516FB          203     djnz 16h, h22
+0269 D517F5          204     djnz 17h, f11
+026C D017            205     pop 17h
+026E D016            206     pop 16h
+0270 22              207     RET
+                     208     
+0271                 209     delay_4s:
+0271 C016            210     push 16h
+0273 C017            211     push 17h
+0275 751750          212     mov 17h, #50h
+0278 7516C8          213     f1: mov 16h, #0C8H
+027B 5188            214     h2: acall delay_250us
+027D D516FB          215     djnz 16h, h2
+0280 D517F5          216     djnz 17h, f1
+0283 D017            217     pop 17h
+0285 D016            218     pop 16h
+0287 22              219     RET
+                     220     
+0288                 221     delay_250us:
+0288 C016            222     push 16h
+028A 7516F4          223     mov 16h, #244
+028D D516FD          224     h1: djnz 16h, h1
+0290 D016            225     pop 16h
+0292 22              226     RET
+                     227     
+                     228     END
+A51 MACRO ASSEMBLER  Q                                                                    02/06/2024 15:35:36 PAGE     5
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+DELAY_250US. . . .  C ADDR   0288H   A   
+DELAY_4S . . . . .  C ADDR   0271H   A   
+DELAY_8S . . . . .  C ADDR   025AH   A   
+F1 . . . . . . . .  C ADDR   0278H   A   
+F11. . . . . . . .  C ADDR   0261H   A   
+H1 . . . . . . . .  C ADDR   028DH   A   
+H2 . . . . . . . .  C ADDR   027BH   A   
+H22. . . . . . . .  C ADDR   0264H   A   
+HERE . . . . . . .  C ADDR   0108H   A   
+LED_DISP . . . . .  C ADDR   0245H   A   
+LOOP . . . . . . .  C ADDR   0104H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+OUT. . . . . . . .  C ADDR   0244H   A   
+OUT_1B . . . . . .  C ADDR   01CBH   A   
+OUT_1C . . . . . .  C ADDR   01D0H   A   
+OUT_1D . . . . . .  C ADDR   01D5H   A   
+OUT_2. . . . . . .  C ADDR   01D8H   A   
+OUT_2B . . . . . .  C ADDR   01EFH   A   
+OUT_2C . . . . . .  C ADDR   01F4H   A   
+OUT_2D . . . . . .  C ADDR   01F9H   A   
+OUT_3. . . . . . .  C ADDR   01FCH   A   
+OUT_3B . . . . . .  C ADDR   0213H   A   
+OUT_3C . . . . . .  C ADDR   0218H   A   
+OUT_3D . . . . . .  C ADDR   021DH   A   
+OUT_4. . . . . . .  C ADDR   0220H   A   
+OUT_4B . . . . . .  C ADDR   0237H   A   
+OUT_4C . . . . . .  C ADDR   023CH   A   
+OUT_4D . . . . . .  C ADDR   0241H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+QUANT_ENC. . . . .  C ADDR   01B4H   A   
+TAKE_INP . . . . .  C ADDR   0130H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
