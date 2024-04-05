@@ -1,0 +1,61 @@
+A51 MACRO ASSEMBLER  Q2                                                                   02/09/2024 11:07:40 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\Q2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE Q2.asm SET(SMALL) DEBUG PRINT(.\Listings\Q2.lst) OBJECT(.\Objects\Q2.ob
+                      j) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+                       4     
+0100                   5     MAIN:
+0100 3130              6     CALL DET
+                       7     
+0102 80FE              8     HERE: SJMP HERE
+0130                   9     ORG 130H
+                      10     
+0130                  11     DET:
+0130 E561             12     MOV A, 61H
+0132 8562F0           13     MOV B, 62H
+0135 A4               14     MUL AB  
+0136 F571             15     MOV 71H, A
+0138 85F070           16     MOV 70H, B
+                      17     
+013B E560             18     MOV A, 60H
+013D 8563F0           19     MOV B, 63H
+0140 A4               20     MUL AB  
+                      21     
+0141 A871             22     MOV R0, 71H  
+0143 A970             23     MOV R1, 70H  
+                      24     
+0145 98               25     SUBB A, R0  
+0146 F571             26     MOV 71H, A
+                      27     
+0148 E5F0             28     MOV A, B
+014A 99               29     SUBB A, R1  
+014B F570             30     MOV 70H, A
+                      31     
+014D 22               32     RET
+                      33     END
+A51 MACRO ASSEMBLER  Q2                                                                   02/09/2024 11:07:40 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+DET. . . . . . . .  C ADDR   0130H   A   
+HERE . . . . . . .  C ADDR   0102H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

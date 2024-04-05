@@ -1,0 +1,225 @@
+ORG 0H
+LJMP MAIN
+ORG 100H
+	
+MAIN:
+CALL DET_CALCULATOR_3D
+MOV R0, 55H
+CJNE R0, #00H, DET_NOT_ZERO
+TERMINATION:
+	MOV R0, #70H
+	MOV A, #09H
+	LOOP:
+		MOV @R0, #0FFH
+		INC R0
+		DEC A
+		CJNE A, #00H, LOOP
+		RET
+	RET
+DET_NOT_ZERO:
+	CALL COFACTOR_CALC
+	CALL COFACTOR_TRANSPOSE
+	CALL INV_CALC
+RET
+HERE: SJMP HERE
+
+ORG 130H
+
+INV_CALC:
+	PUSH 00H
+	MOV R0, #70H
+	MOV R1, #09H
+	LOOP_INV_CALC:
+		MOV B, 54H
+		MOV A, @R0
+		DIV AB
+		MOV @R0, A
+		INC R0
+		DEC R1
+		CJNE R1, #00H, LOOP
+	POP 00H
+RET
+
+COFACTOR_CALC:
+PUSH 00H
+	;c00 calculation
+	MOV 50H, 64H
+	MOV 51H, 65H 
+	MOV 52H, 67H
+	MOV 52H, 68H
+	CALL DET_CALC
+	MOV 70H, 54H
+	
+	;c01 calculation
+	MOV 50H, 65H
+	MOV 51H, 63H 
+	MOV 52H, 68H
+	MOV 52H, 66H
+	CALL DET_CALC
+	MOV 71H, 54H
+	
+	;c02 calculation
+	MOV 50H, 63H
+	MOV 51H, 64H 
+	MOV 52H, 66H
+	MOV 52H, 67H
+	CALL DET_CALC
+	MOV 72H, 54H
+	
+	;c10 calculation
+	MOV 50H, 62H
+	MOV 51H, 61H 
+	MOV 52H, 68H
+	MOV 52H, 67H
+	CALL DET_CALC
+	MOV 73H, 54H
+	
+	;c11 calculation
+	MOV 50H, 60H
+	MOV 51H, 62H 
+	MOV 52H, 66H
+	MOV 52H, 68H
+	CALL DET_CALC
+	MOV 74H, 54H
+	
+	;c12 calculation
+	MOV 50H, 61H
+	MOV 51H, 60H 
+	MOV 52H, 67H
+	MOV 52H, 66H
+	CALL DET_CALC
+	MOV 75H, 54H
+	
+	;c20 calculation
+	MOV 50H, 61H
+	MOV 51H, 65H 
+	MOV 52H, 62H
+	MOV 52H, 64H
+	CALL DET_CALC
+	MOV 76H, 54H
+	
+	;c21 calculation
+	MOV 50H, 63H
+	MOV 51H, 65H 
+	MOV 52H, 60H
+	MOV 52H, 62H
+	CALL DET_CALC
+	MOV 77H, 54H
+	
+	;c22 calculation
+	MOV 50H, 60H
+	MOV 51H, 61H 
+	MOV 52H, 63H
+	MOV 52H, 64H
+	CALL DET_CALC
+	MOV 78H, 54H
+	
+POP 00H
+RET
+
+COFACTOR_TRANSPOSE:
+	PUSH 00H
+	MOV A, 71H
+	MOV B, 73H
+	MOV R0, A
+	MOV A, B
+	MOV B, R0
+	
+	MOV A, 72H
+	MOV B, 76H
+	MOV R0, A
+	MOV A, B
+	MOV B, R0
+	
+	MOV A, 75H
+	MOV B, 77H
+	MOV R0, A
+	MOV A, B
+	MOV B, R0
+	POP 00H
+RET
+
+;SPECIAL_ADDER: // the values to add specially are stored in 00h and 01h. The values to add are stored from 02h to 09h
+;	PUSH 00H
+;	MOV 02h, #01h
+;	MOV 03H, #01h
+;	MOV 04H, #02h
+;	MOV 05H, #02h
+;	MOV 06H, #01h
+;	MOV 07H, #02h
+;	MOV 08H, #02h
+;	MOV 09H, #01h
+;	MOV R0, #04h
+;	MOV R1, #02H
+;	LOOP_SP_ADD:
+;		MOV A, 00h
+;		MOV B, 01h
+;		ADD A, R0
+;		MOV 10H, #02H
+;		SUBB A, 10H
+;		JNC YESS
+;		
+;		DEC R0
+;	RET
+;	YESS:
+;RET
+;	
+
+DET_CALC: // determinant of a 2D matrix whose elements are stored in 50H(a), 51H(b), 52H(c), 53H(d) and the det is stored in 54H
+	PUSH 00h
+	MOV A, 51H
+	MOV B, 52H
+	MUL AB
+	MOV 54H, A
+	MOV R0, 54H
+	
+	MOV A, 50H
+	MOV B, 53H
+	MUL AB
+	SUBB A, R0
+	MOV 54H, A
+	POP 00h
+RET
+
+DET_CALCULATOR_3D: //assuming the elements are stored from mem loc 60h to 68h and the output determinant is in 55h and uses 56h,57h,58h
+	PUSH 00H
+	MOV 50H, 64H
+	MOV 51H, 65H
+	MOV 52H, 67H
+	MOV 53H, 68H
+	CALL DET_CALC
+	MOV A, 54H
+	MOV B, 60H
+	MUL AB
+	MOV 56H, A
+	
+	MOV 50H, 63H
+	MOV 51H, 65H
+	MOV 52H, 66H
+	MOV 53H, 68H
+	CALL DET_CALC
+	MOV A, 54H
+	MOV B, 61H
+	MUL AB
+	MOV 57H, A
+	
+	MOV 50H, 63H
+	MOV 51H, 64H
+	MOV 52H, 66H
+	MOV 53H, 67H
+	CALL DET_CALC
+	MOV A, 54H
+	MOV B, 62H
+	MUL AB
+	MOV 58H, A
+	
+	MOV A, 56H
+	MOV B, 57H
+	SUBB A, B
+	MOV B, 58H
+	ADD A, B
+	MOV 55H, A
+	POP 00H
+RET
+
+END

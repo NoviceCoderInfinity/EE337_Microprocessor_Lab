@@ -1,0 +1,189 @@
+C51 COMPILER V9.60.7.0   Q3                                                                02/20/2024 16:12:31 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE Q3
+OBJECT MODULE PLACED IN .\Objects\Q3.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Q3.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\Q3.lst
+                    -) TABS(2) OBJECT(.\Objects\Q3.obj)
+
+line level    source
+
+   1          #include <at89c5131.h>
+   2          
+   3          /*
+   4          
+   5          Two frequency simultaneously with timers in interrupts mode.
+   6          
+   7          First LED1 time period is 2ms.
+   8          Second LED2 time period is 3ms.
+   9          
+  10          */
+  11          sbit LED=P0^7;
+  12          int count =0;
+  13          
+  14          void timer1_isr () interrupt 3
+  15          {
+  16   1        TH1 =  0x9e;
+  17   1        TL1 =  0x58;
+  18   1        count++;
+  19   1         //Reload values for TH0 and TL0. Start timer 0.
+  20   1      
+  21   1      }
+  22          
+  23          
+  24          void sa_l()
+  25          {   LED=1;TF0 = 0;
+  26   1          TH0 = 0xef;
+  27   1          TL0 = 0xb9;
+  28   1          TR0 = 1;
+  29   1          while(!TF0);
+  30   1        LED=0;TF0 = 0;
+  31   1          TH0 = 0xef;
+  32   1          TL0 = 0xb9;
+  33   1          TR0 = 1;
+  34   1          while(!TF0);
+  35   1      }
+  36          void re()
+  37          { LED = 1;  TF0 = 0;
+  38   1          TH0 = 0xf1;
+  39   1          TL0 = 0x88;
+  40   1          TR0 = 1;
+  41   1          while(!TF0);
+  42   1      LED = 0;  TF0 = 0;
+  43   1          TH0 = 0xf1;
+  44   1          TL0 = 0x88;
+  45   1          TR0 = 1;
+  46   1          while(!TF0);
+  47   1      }
+  48          void ga()
+  49          {   LED = 1;TF0 = 0;
+  50   1          TH0 = 0xf2;
+  51   1          TL0 = 0xfa;
+  52   1          TR0 = 1;
+  53   1          while(!TF0);
+  54   1      LED = 0;TF0 = 0;
+C51 COMPILER V9.60.7.0   Q3                                                                02/20/2024 16:12:31 PAGE 2   
+
+  55   1          TH0 = 0xf2;
+  56   1          TL0 = 0xfa;
+  57   1          TR0 = 1;
+  58   1          while(!TF0);
+  59   1      }
+  60          void ma()
+  61          {   LED = 1;TF0 = 0;
+  62   1          TH0 = 0xf3;
+  63   1          TL0 = 0xcb;
+  64   1          TR0 = 1;
+  65   1          while(!TF0);
+  66   1      LED = 0;TF0 = 0;
+  67   1          TH0 = 0xf3;
+  68   1          TL0 = 0xcb;
+  69   1          TR0 = 1;
+  70   1          while(!TF0);
+  71   1      }
+  72          void pa()
+  73          {   LED = 1;TF0 = 0;
+  74   1          TH0 = 0xf5;
+  75   1          TL0 = 0x26;
+  76   1          TR0 = 1;
+  77   1          while(!TF0);
+  78   1      LED = 0;TF0 = 0;
+  79   1          TH0 = 0xf5;
+  80   1          TL0 = 0x26;
+  81   1          TR0 = 1;
+  82   1          while(!TF0);
+  83   1      }
+  84          void dha()
+  85          {   
+  86   1      LED = 1;
+  87   1      TF0 = 0;
+  88   1          TH0 = 0xf6;
+  89   1          TL0 = 0x3c;
+  90   1          TR0 = 1;
+  91   1          while(!TF0);
+  92   1      LED = 0;
+  93   1      TF0 = 0;
+  94   1          TH0 = 0xf6;
+  95   1          TL0 = 0x3c;
+  96   1          TR0 = 1;
+  97   1          while(!TF0);
+  98   1      }
+  99          void ni()
+ 100          {
+ 101   1      LED = 1;    
+ 102   1      TF0 = 0;
+ 103   1          TH0 = 0xf7;
+ 104   1          TL0 = 0x51;
+ 105   1          TR0 = 1;
+ 106   1          while(!TF0);
+ 107   1      LED = 0;    
+ 108   1      TF0 = 0;
+ 109   1          TH0 = 0xf7;
+ 110   1          TL0 = 0x51;
+ 111   1          TR0 = 1;
+ 112   1          while(!TF0);
+ 113   1      }
+ 114          void sa_h()
+ 115          {   
+ 116   1          LED = 1;
+C51 COMPILER V9.60.7.0   Q3                                                                02/20/2024 16:12:31 PAGE 3   
+
+ 117   1          TF0 = 0;
+ 118   1          TH0 = 0xf7;
+ 119   1          TL0 = 0xdc;
+ 120   1          TR0 = 1;
+ 121   1          while(!TF0);
+ 122   1          
+ 123   1          LED = 0;
+ 124   1          TF0 = 0;
+ 125   1          TH0 = 0xf7;
+ 126   1          TL0 = 0xdc;
+ 127   1          TR0 = 1;
+ 128   1          while(!TF0);
+ 129   1      
+ 130   1      } 
+ 131          
+ 132          //Main function
+ 133          void main(void)
+ 134          {
+ 135   1        TMOD = 0x11; //mode 1 timer 0 and timer 1
+ 136   1        ET1 = 1;
+ 137   1        EA = 1;  //activate global interrupts
+ 138   1        TR1 = 1; //start timer 1
+ 139   1        while(1)
+ 140   1        {
+ 141   2          while(count < 40){sa_l();}
+ 142   2          
+ 143   2          while(count <100){re();}
+ 144   2          
+ 145   2          while( count<180){ga();}
+ 146   2        
+ 147   2          while( count<220){ma();}
+ 148   2          
+ 149   2          while( count<300){pa();}
+ 150   2          
+ 151   2          while( count<360){dha();}
+ 152   2      
+ 153   2          while( count<440){ni();}
+ 154   2      
+ 155   2          while( count<480){sa_h();}
+ 156   2          count = 0;
+ 157   2        }
+ 158   1        
+ 159   1        
+ 160   1        while(1);
+ 161   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    428    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

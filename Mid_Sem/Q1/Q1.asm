@@ -1,0 +1,51 @@
+ORG 0H
+LJMP MAIN
+ORG 100H
+
+MAIN:
+	MOV P1, #00H
+	CALL delay_0_4ms
+	MOV P1, #01H
+	CALL delay_1_6ms
+	SJMP MAIN
+
+ORG 130H
+
+delay_0_4ms:
+	PUSH 00H
+	MOV R0, #1
+	MOV A, #55
+	MOV B, #01H
+	MUL AB
+	H5: MOV 70H, #244
+		SUBB A, #1
+		CJNE A, #00H, H5
+		
+	H3: ACALL delay_250us
+	DJNZ R0, H3
+	POP 00H
+RET
+
+delay_1_6ms:
+	PUSH 00H
+	MOV R0, #6
+	MOV A, #55
+	MOV B, #01H
+	MUL AB
+	H6: MOV 70H, #244
+		SUBB A, #1
+		CJNE A, #00H, H6
+	H2: ACALL delay_250us
+	DJNZ R0, H2
+	POP 00H
+RET
+
+delay_250us:
+PUSH 00H
+MOV R0, #244
+
+H1: DJNZ R0, H1
+POP 00H
+RET
+
+END

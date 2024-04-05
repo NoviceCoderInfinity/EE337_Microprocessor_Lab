@@ -1,0 +1,84 @@
+C51 COMPILER V9.60.7.0   Q3                                                                02/13/2024 16:59:34 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE Q3
+OBJECT MODULE PLACED IN .\Objects\Q3.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Q3.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\Q3.lst
+                    -) TABS(2) OBJECT(.\Objects\Q3.obj)
+
+line level    source
+
+   1          #include <at89c5131.h>
+   2          #include <math.h>
+   3          #include "lcd.h"
+   4          
+   5          code unsigned char display_msg1[]="     Input 1:   ";   
+   6          code unsigned char display_msg2[]="     Input 2:   "; 
+   7          code unsigned char display_msg3[]="   Prediction:  "; 
+   8          code unsigned char display_msg4[]="     Class 1    "; 
+   9          code unsigned char display_msg5[]="     Class 2    "; 
+  10          
+  11          code unsigned char display_msg6[]="P(Class 1)=";
+  12          code unsigned char display_msg7[]="P(Class 2)=";
+  13          
+  14          void main(){
+  15   1        int w_0 = -36, w_1 = 5, w_2 = 7;
+  16   1        int x_1 = 0, x_2 = 0; int y = 0;
+  17   1        int class = 0;
+  18   1        float z = 0;
+  19   1        
+  20   1        P1 = 0x0F;
+  21   1        lcd_init();
+  22   1        lcd_cmd(0x80);                          
+  23   1        msdelay(4);
+  24   1        lcd_write_string(display_msg1);
+  25   1        msdelay(10000);
+  26   1        x_1=P1 &0x0f;
+  27   1        
+  28   1        lcd_cmd(0x01);
+  29   1        
+  30   1        msdelay(4);
+  31   1        lcd_cmd(0x02);                          
+  32   1        msdelay(4);
+  33   1        lcd_write_string(display_msg2);
+  34   1        msdelay(10000);
+  35   1        x_2=P1 & 0x0f;
+  36   1        
+  37   1        
+  38   1        y = w_0 + (x_1*w_1) + (x_2*w_2);
+  39   1        
+  40   1        z = exp(-y);
+  41   1        z = z + 1;
+  42   1        z = 1/z;
+  43   1        lcd_cmd(0x01);
+  44   1        msdelay(4);
+  45   1        lcd_cmd(0x80);
+  46   1        msdelay(4);
+  47   1        lcd_write_string(display_msg6);
+  48   1        msdelay(4);
+  49   1        lcd_float(z);
+  50   1        
+  51   1        
+  52   1        lcd_cmd(0xC0);
+  53   1        msdelay(4);
+  54   1        lcd_write_string(display_msg7);
+C51 COMPILER V9.60.7.0   Q3                                                                02/13/2024 16:59:34 PAGE 2   
+
+  55   1        msdelay(4);
+  56   1        lcd_float(1-z);
+  57   1        msdelay(10000);
+  58   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    569    ----
+   CONSTANT SIZE    =    109    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      23
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

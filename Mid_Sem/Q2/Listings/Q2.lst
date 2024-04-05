@@ -1,0 +1,268 @@
+A51 MACRO ASSEMBLER  Q2                                                                   02/10/2024 11:28:21 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\Q2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE Q2.asm SET(SMALL) DEBUG PRINT(.\Listings\Q2.lst) OBJECT(.\Objects\Q2.ob
+                      j) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+                       4             
+0100                   5     MAIN:
+0100 511D              6     CALL DET_CALCULATOR_3D
+0102 A855              7     MOV R0, 55H
+0104 B8000D            8     CJNE R0, #00H, DET_NOT_ZERO
+0107                   9     TERMINATION:
+0107 7870             10             MOV R0, #70H
+0109 7409             11             MOV A, #09H
+010B                  12             LOOP:
+010B 76FF             13                     MOV @R0, #0FFH
+010D 08               14                     INC R0
+010E 14               15                     DEC A
+010F B400F9           16                     CJNE A, #00H, LOOP
+0112 22               17                     RET
+0113 22               18             RET
+0114                  19     DET_NOT_ZERO:
+0114 3144             20             CALL COFACTOR_CALC
+0116 31E2             21             CALL COFACTOR_TRANSPOSE
+0118 3130             22             CALL INV_CALC
+011A 22               23     RET
+011B 80FE             24     HERE: SJMP HERE
+                      25     
+0130                  26     ORG 130H
+                      27     
+0130                  28     INV_CALC:
+0130 C000             29             PUSH 00H
+0132 7870             30             MOV R0, #70H
+0134 7909             31             MOV R1, #09H
+0136                  32             LOOP_INV_CALC:
+0136 8554F0           33                     MOV B, 54H
+0139 E6               34                     MOV A, @R0
+013A 84               35                     DIV AB
+013B F6               36                     MOV @R0, A
+013C 08               37                     INC R0
+013D 19               38                     DEC R1
+013E B900CA           39                     CJNE R1, #00H, LOOP
+0141 D000             40             POP 00H
+0143 22               41     RET
+                      42     
+0144                  43     COFACTOR_CALC:
+0144 C000             44     PUSH 00H
+                      45             ;c00 calculation
+0146 856450           46             MOV 50H, 64H
+0149 856551           47             MOV 51H, 65H 
+014C 856752           48             MOV 52H, 67H
+014F 856852           49             MOV 52H, 68H
+0152 5105             50             CALL DET_CALC
+0154 855470           51             MOV 70H, 54H
+                      52             
+                      53             ;c01 calculation
+0157 856550           54             MOV 50H, 65H
+015A 856351           55             MOV 51H, 63H 
+015D 856852           56             MOV 52H, 68H
+0160 856652           57             MOV 52H, 66H
+A51 MACRO ASSEMBLER  Q2                                                                   02/10/2024 11:28:21 PAGE     2
+
+0163 5105             58             CALL DET_CALC
+0165 855471           59             MOV 71H, 54H
+                      60             
+                      61             ;c02 calculation
+0168 856350           62             MOV 50H, 63H
+016B 856451           63             MOV 51H, 64H 
+016E 856652           64             MOV 52H, 66H
+0171 856752           65             MOV 52H, 67H
+0174 5105             66             CALL DET_CALC
+0176 855472           67             MOV 72H, 54H
+                      68             
+                      69             ;c10 calculation
+0179 856250           70             MOV 50H, 62H
+017C 856151           71             MOV 51H, 61H 
+017F 856852           72             MOV 52H, 68H
+0182 856752           73             MOV 52H, 67H
+0185 5105             74             CALL DET_CALC
+0187 855473           75             MOV 73H, 54H
+                      76             
+                      77             ;c11 calculation
+018A 856050           78             MOV 50H, 60H
+018D 856251           79             MOV 51H, 62H 
+0190 856652           80             MOV 52H, 66H
+0193 856852           81             MOV 52H, 68H
+0196 5105             82             CALL DET_CALC
+0198 855474           83             MOV 74H, 54H
+                      84             
+                      85             ;c12 calculation
+019B 856150           86             MOV 50H, 61H
+019E 856051           87             MOV 51H, 60H 
+01A1 856752           88             MOV 52H, 67H
+01A4 856652           89             MOV 52H, 66H
+01A7 5105             90             CALL DET_CALC
+01A9 855475           91             MOV 75H, 54H
+                      92             
+                      93             ;c20 calculation
+01AC 856150           94             MOV 50H, 61H
+01AF 856551           95             MOV 51H, 65H 
+01B2 856252           96             MOV 52H, 62H
+01B5 856452           97             MOV 52H, 64H
+01B8 5105             98             CALL DET_CALC
+01BA 855476           99             MOV 76H, 54H
+                     100             
+                     101             ;c21 calculation
+01BD 856350          102             MOV 50H, 63H
+01C0 856551          103             MOV 51H, 65H 
+01C3 856052          104             MOV 52H, 60H
+01C6 856252          105             MOV 52H, 62H
+01C9 5105            106             CALL DET_CALC
+01CB 855477          107             MOV 77H, 54H
+                     108             
+                     109             ;c22 calculation
+01CE 856050          110             MOV 50H, 60H
+01D1 856151          111             MOV 51H, 61H 
+01D4 856352          112             MOV 52H, 63H
+01D7 856452          113             MOV 52H, 64H
+01DA 5105            114             CALL DET_CALC
+01DC 855478          115             MOV 78H, 54H
+                     116             
+01DF D000            117     POP 00H
+01E1 22              118     RET
+                     119     
+01E2                 120     COFACTOR_TRANSPOSE:
+01E2 C000            121             PUSH 00H
+01E4 E571            122             MOV A, 71H
+01E6 8573F0          123             MOV B, 73H
+A51 MACRO ASSEMBLER  Q2                                                                   02/10/2024 11:28:21 PAGE     3
+
+01E9 F8              124             MOV R0, A
+01EA E5F0            125             MOV A, B
+01EC 88F0            126             MOV B, R0
+                     127             
+01EE E572            128             MOV A, 72H
+01F0 8576F0          129             MOV B, 76H
+01F3 F8              130             MOV R0, A
+01F4 E5F0            131             MOV A, B
+01F6 88F0            132             MOV B, R0
+                     133             
+01F8 E575            134             MOV A, 75H
+01FA 8577F0          135             MOV B, 77H
+01FD F8              136             MOV R0, A
+01FE E5F0            137             MOV A, B
+0200 88F0            138             MOV B, R0
+0202 D000            139             POP 00H
+0204 22              140     RET
+                     141     
+                     142     ;SPECIAL_ADDER: // the values to add specially are stored in 00h and 01h. The values to add
+                              are stored from 02h to 09h
+                     143     ;       PUSH 00H
+                     144     ;       MOV 02h, #01h
+                     145     ;       MOV 03H, #01h
+                     146     ;       MOV 04H, #02h
+                     147     ;       MOV 05H, #02h
+                     148     ;       MOV 06H, #01h
+                     149     ;       MOV 07H, #02h
+                     150     ;       MOV 08H, #02h
+                     151     ;       MOV 09H, #01h
+                     152     ;       MOV R0, #04h
+                     153     ;       MOV R1, #02H
+                     154     ;       LOOP_SP_ADD:
+                     155     ;               MOV A, 00h
+                     156     ;               MOV B, 01h
+                     157     ;               ADD A, R0
+                     158     ;               MOV 10H, #02H
+                     159     ;               SUBB A, 10H
+                     160     ;               JNC YESS
+                     161     ;               
+                     162     ;               DEC R0
+                     163     ;       RET
+                     164     ;       YESS:
+                     165     ;RET
+                     166     ;       
+                     167     
+0205                 168     DET_CALC:  
+0205 C000            169             PUSH 00h
+0207 E551            170             MOV A, 51H
+0209 8552F0          171             MOV B, 52H
+020C A4              172             MUL AB
+020D F554            173             MOV 54H, A
+020F A854            174             MOV R0, 54H
+                     175             
+0211 E550            176             MOV A, 50H
+0213 8553F0          177             MOV B, 53H
+0216 A4              178             MUL AB
+0217 98              179             SUBB A, R0
+0218 F554            180             MOV 54H, A
+021A D000            181             POP 00h
+021C 22              182     RET
+                     183     
+021D                 184     DET_CALCULATOR_3D:  
+021D C000            185             PUSH 00H
+021F 856450          186             MOV 50H, 64H
+0222 856551          187             MOV 51H, 65H
+0225 856752          188             MOV 52H, 67H
+A51 MACRO ASSEMBLER  Q2                                                                   02/10/2024 11:28:21 PAGE     4
+
+0228 856853          189             MOV 53H, 68H
+022B 5105            190             CALL DET_CALC
+022D E554            191             MOV A, 54H
+022F 8560F0          192             MOV B, 60H
+0232 A4              193             MUL AB
+0233 F556            194             MOV 56H, A
+                     195             
+0235 856350          196             MOV 50H, 63H
+0238 856551          197             MOV 51H, 65H
+023B 856652          198             MOV 52H, 66H
+023E 856853          199             MOV 53H, 68H
+0241 5105            200             CALL DET_CALC
+0243 E554            201             MOV A, 54H
+0245 8561F0          202             MOV B, 61H
+0248 A4              203             MUL AB
+0249 F557            204             MOV 57H, A
+                     205             
+024B 856350          206             MOV 50H, 63H
+024E 856451          207             MOV 51H, 64H
+0251 856652          208             MOV 52H, 66H
+0254 856753          209             MOV 53H, 67H
+0257 5105            210             CALL DET_CALC
+0259 E554            211             MOV A, 54H
+025B 8562F0          212             MOV B, 62H
+025E A4              213             MUL AB
+025F F558            214             MOV 58H, A
+                     215             
+0261 E556            216             MOV A, 56H
+0263 8557F0          217             MOV B, 57H
+0266 95F0            218             SUBB A, B
+0268 8558F0          219             MOV B, 58H
+026B 25F0            220             ADD A, B
+026D F555            221             MOV 55H, A
+026F D000            222             POP 00H
+0271 22              223     RET
+                     224     
+                     225     END
+A51 MACRO ASSEMBLER  Q2                                                                   02/10/2024 11:28:21 PAGE     5
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+COFACTOR_CALC. . .  C ADDR   0144H   A   
+COFACTOR_TRANSPOSE  C ADDR   01E2H   A   
+DET_CALC . . . . .  C ADDR   0205H   A   
+DET_CALCULATOR_3D.  C ADDR   021DH   A   
+DET_NOT_ZERO . . .  C ADDR   0114H   A   
+HERE . . . . . . .  C ADDR   011BH   A   
+INV_CALC . . . . .  C ADDR   0130H   A   
+LOOP . . . . . . .  C ADDR   010BH   A   
+LOOP_INV_CALC. . .  C ADDR   0136H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+TERMINATION. . . .  C ADDR   0107H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

@@ -1,0 +1,241 @@
+C51 COMPILER V9.60.7.0   MAIN                                                              03/12/2024 15:46:19 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <at89c5131.h>
+   2          #include "lcd.h"
+   3          
+   4          code unsigned char display_msg1[]="    Sa (low)    ";   
+   5          code unsigned char display_msg2[]="       Re       "; 
+   6          code unsigned char display_msg3[]="       Ga       "; 
+   7          code unsigned char display_msg4[]="       Ma       ";
+   8          code unsigned char display_msg5[]="       Pa       ";
+   9          code unsigned char display_msg6[]="       Dha      ";
+  10          code unsigned char display_msg7[]="       Ni       ";
+  11          code unsigned char display_msg8[]="    Sa (high)   ";
+  12          code unsigned char display_msg9[]="     Silence    ";
+  13          
+  14          code unsigned char welcome_msg1[]=" Anupam's Music ";
+  15          
+  16          sbit ROW0 = P3^4;   sbit COL0 = P3^3;
+  17          sbit ROW1 = P3^5;   sbit COL1 = P3^2;
+  18          sbit ROW2 = P3^6;   sbit COL2 = P3^1;
+  19          sbit ROW3 = P3^7;   sbit COL3 = P3^0;
+  20          sbit LED=P0^7;
+  21          
+  22          int mask = 0x0F;
+  23          
+  24          void sa_l();  void re();  void ga();
+  25          void ma();  void pa();  void dha();
+  26          void ni() ; void sa_h();
+  27          
+  28          void prev_key_release() ;
+  29          void check_key_press() ;
+  30          int read_key();
+  31          void debounce() ;
+  32          int row_detection() ;
+  33          void play_sound(int key) ;
+  34          void display_on_led(int key);
+  35          
+  36              
+  37          void main () {
+  38   1          int key;
+  39   1          lcd_init();
+  40   1          TMOD = 0x11;
+  41   1          P3 = 0x0F;
+  42   1          
+  43   1          lcd_write_string(welcome_msg1);
+  44   1          while(1) {
+  45   2              prev_key_release();
+  46   2              check_key_press();
+  47   2              key = read_key();               
+  48   2              display_on_led(key);
+  49   2              play_sound(key);  
+  50   2          }
+  51   1      }
+  52          
+  53          void prev_key_release() {
+  54   1          ROW0 = 0; ROW1 = 0; ROW2 = 0; ROW3 = 0;
+C51 COMPILER V9.60.7.0   MAIN                                                              03/12/2024 15:46:19 PAGE 2   
+
+  55   1          while (!(COL0 & COL1 & COL2 & COL3)); }
+  56          
+  57          void check_key_press() {
+  58   1          while (COL0 & COL1 & COL2 & COL3);
+  59   1          debounce();
+  60   1          if (COL0 & COL1 & COL2 & COL3) {prev_key_release();}}
+  61          
+  62          int read_key() {
+  63   1          //int P3_data;
+  64   1          //Reading from ROW0
+  65   1          ROW0 = 0; ROW1 = 1; ROW2 = 1; ROW3 = 1;
+  66   1          //P3_data = P3; if (P3_data & mask != mask) 
+  67   1          if (!(COL0 & COL1 & COL2 & COL3)) {
+  68   2              if (COL0 == 0)      { return 1; }
+  69   2              else if (COL1 == 0) { return 2; }
+  70   2              else if (COL2 == 0) { return 3; }
+  71   2              else if (COL3 == 0) { return 0; }   }
+  72   1          
+  73   1          //Reading from ROW1
+  74   1          ROW0 = 1; ROW1 = 0; ROW2 = 1; ROW3 = 1;
+  75   1          if (!(COL0 & COL1 & COL2 & COL3)) {
+  76   2              if (COL0 == 0)      { return 4; }
+  77   2              else if (COL1 == 0) { return 5; }
+  78   2              else if (COL2 == 0) { return 6; }
+  79   2              else if (COL3 == 0) { return 0; }   }
+  80   1          
+  81   1          //Reading from ROW2
+  82   1          ROW0 = 1; ROW1 = 1; ROW2 = 0; ROW3 = 1;
+  83   1          if (!(COL0 & COL1 & COL2 & COL3)) {
+  84   2              if (COL0 == 0)      { return 7; }
+  85   2              else if (COL1 == 0) { return 8; }
+  86   2              else if (COL2 == 0) { return 9; }
+  87   2              else if (COL3 == 0) { return 0; }   }
+  88   1          
+  89   1          //Reading from ROW3
+  90   1          ROW0 = 1; ROW1 = 1; ROW2 = 1; ROW3 = 0;
+  91   1          if (!(COL0 & COL1 & COL2 & COL3)) {
+  92   2              if (COL0 == 0)      { return 0; }
+  93   2              else if (COL1 == 0) { return 0; }
+  94   2              else if (COL2 == 0) { return 0; }
+  95   2              else if (COL3 == 0) { return 0; }   }
+  96   1      }
+  97          
+  98          void debounce() {
+  99   1          TF1 = 0;
+ 100   1          TL1 = 0xEC; TH1 = 0x00;
+ 101   1          TR1 = 1;
+ 102   1          while(!TF1);
+ 103   1          TR1  = 0; }
+ 104              
+ 105          void play_sound(int key) {
+ 106   1          switch(key) {
+ 107   2      //        case 1: {sa_l(); }  lcd_cmd(0x01);    break;
+ 108   2      //        case 2: {re();    } lcd_cmd(0x01);    break;
+ 109   2      //        case 3: {ga();    } lcd_cmd(0x01);    break;
+ 110   2      //        case 4: {ma();    } lcd_cmd(0x01);    break;
+ 111   2      //        case 5: {pa();    } lcd_cmd(0x01);    break;
+ 112   2      //        case 6: {dha(); } lcd_cmd(0x01);    break;
+ 113   2      //        case 7: {ni();    } lcd_cmd(0x01);    break;
+ 114   2      //        case 8: {sa_h();  } lcd_cmd(0x01);    break;
+ 115   2      //        case 9: {       } lcd_cmd(0x01);    break;
+ 116   2      //        default:{       } lcd_cmd(0x01);    break;
+C51 COMPILER V9.60.7.0   MAIN                                                              03/12/2024 15:46:19 PAGE 3   
+
+ 117   2                case 1: while (!(COL0 & COL1 & COL2 & COL3)) {sa_l(); } lcd_cmd(0x01);    break;
+ 118   2                case 2: while (!(COL0 & COL1 & COL2 & COL3)) {re();   } lcd_cmd(0x01);    break;
+ 119   2                case 3: while (!(COL0 & COL1 & COL2 & COL3)) {ga();   } lcd_cmd(0x01);    break;
+ 120   2                case 4: while (!(COL0 & COL1 & COL2 & COL3)) {ma();   } lcd_cmd(0x01);    break;
+ 121   2                case 5: while (!(COL0 & COL1 & COL2 & COL3)) {pa();   } lcd_cmd(0x01);    break;
+ 122   2                case 6: while (!(COL0 & COL1 & COL2 & COL3)) {dha();  } lcd_cmd(0x01);    break;
+ 123   2                case 7: while (!(COL0 & COL1 & COL2 & COL3)) {ni();   } lcd_cmd(0x01);    break;
+ 124   2                case 8: while (!(COL0 & COL1 & COL2 & COL3)) {sa_h(); } lcd_cmd(0x01);    break;
+ 125   2                case 9: while (!(COL0 & COL1 & COL2 & COL3)) {        } lcd_cmd(0x01);    break;
+ 126   2                default:while (!(COL0 & COL1 & COL2 & COL3)) {        } lcd_cmd(0x01);    break;
+ 127   2            }
+ 128   1      }
+ 129          
+ 130          void display_on_led(int key) {
+ 131   1            lcd_cmd(0x01);        
+ 132   1            lcd_cmd(0x80);
+ 133   1            msdelay(4);
+ 134   1            switch (key) {
+ 135   2              case 1: lcd_write_string(display_msg1); break;
+ 136   2              case 2: lcd_write_string(display_msg2); break;
+ 137   2              case 3: lcd_write_string(display_msg3); break;
+ 138   2              case 4: lcd_write_string(display_msg4); break;
+ 139   2              case 5: lcd_write_string(display_msg5); break;
+ 140   2              case 6: lcd_write_string(display_msg6); break;
+ 141   2              case 7: lcd_write_string(display_msg7); break;
+ 142   2              case 8: lcd_write_string(display_msg8); break;
+ 143   2              case 9: lcd_write_string(display_msg9); break;
+ 144   2              default:lcd_write_string(welcome_msg1); break;
+ 145   2            }
+ 146   1      }
+ 147          
+ 148          void sa_l() {   
+ 149   1          LED=1;TF0 = 0;
+ 150   1          TH0 = 0xef; TL0 = 0xb9;
+ 151   1          TR0 = 1;  while(!TF0);
+ 152   1          LED=0;TF0 = 0;
+ 153   1          TH0 = 0xef; TL0 = 0xb9;
+ 154   1          TR0 = 1;  while(!TF0) ; }
+ 155          
+ 156          void re() {
+ 157   1          LED = 1;  TF0 = 0;
+ 158   1          TH0 = 0xf1; TL0 = 0x88;
+ 159   1          TR0 = 1; while(!TF0);
+ 160   1          LED = 0;  TF0 = 0;
+ 161   1          TH0 = 0xf1; TL0 = 0x88;
+ 162   1          TR0 = 1; while(!TF0);   }
+ 163          
+ 164          void ga() {
+ 165   1          LED = 1;TF0 = 0;
+ 166   1          TH0 = 0xf2; TL0 = 0xfa;
+ 167   1          TR0 = 1; while(!TF0);
+ 168   1          LED = 0; TF0 = 0;
+ 169   1          TH0 = 0xf2; TL0 = 0xfa;
+ 170   1          TR0 = 1; while(!TF0);   }
+ 171          
+ 172          void ma() {
+ 173   1          LED = 1;TF0 = 0;
+ 174   1          TH0 = 0xf3; TL0 = 0xcb;
+ 175   1          TR0 = 1;  while(!TF0);
+ 176   1          LED = 0;  TF0 = 0;
+ 177   1          TH0 = 0xf3; TL0 = 0xcb;
+ 178   1          TR0 = 1;  while(!TF0);  }
+C51 COMPILER V9.60.7.0   MAIN                                                              03/12/2024 15:46:19 PAGE 4   
+
+ 179          
+ 180          void pa() {
+ 181   1          LED = 1;TF0 = 0;
+ 182   1          TH0 = 0xf5; TL0 = 0x26;
+ 183   1          TR0 = 1;  while(!TF0);
+ 184   1          LED = 0;TF0 = 0;
+ 185   1          TH0 = 0xf5; TL0 = 0x26;
+ 186   1          TR0 = 1;  while(!TF0);    }
+ 187          
+ 188          void dha() {    
+ 189   1          LED = 1;  TF0 = 0;
+ 190   1          TH0 = 0xf6; TL0 = 0x3c;
+ 191   1          TR0 = 1;  while(!TF0);
+ 192   1          LED = 0;TF0 = 0;
+ 193   1          TH0 = 0xf6; TL0 = 0x3c;
+ 194   1          TR0 = 1;  while(!TF0);    }
+ 195          
+ 196          void ni() {
+ 197   1          LED = 1;TF0 = 0;
+ 198   1          TH0 = 0xf7; TL0 = 0x51;
+ 199   1          TR0 = 1;  while(!TF0);
+ 200   1          LED = 0;  TF0 = 0;
+ 201   1          TH0 = 0xf7; TL0 = 0x51;
+ 202   1          TR0 = 1;  while(!TF0);    }
+ 203          
+ 204          void sa_h() {   
+ 205   1          LED = 1;  TF0 = 0;
+ 206   1          TH0 = 0xf7; TL0 = 0xdc;
+ 207   1          TR0 = 1;  while(!TF0);
+ 208   1          LED = 0;  TF0 = 0;
+ 209   1          TH0 = 0xf7; TL0 = 0xdc;
+ 210   1          TR0 = 1;  while(!TF0);  }
+*** WARNING C291 IN LINE 96 OF main.c: not every exit path returns a value
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1070    ----
+   CONSTANT SIZE    =    170    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

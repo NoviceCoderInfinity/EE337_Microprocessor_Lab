@@ -1,0 +1,70 @@
+A51 MACRO ASSEMBLER  Q1                                                                   02/09/2024 10:38:12 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\Q1.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE Q1.asm SET(SMALL) DEBUG PRINT(.\Listings\Q1.lst) OBJECT(.\Objects\Q1.ob
+                      j) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+                       4     
+0100                   5     MAIN:
+0100 7961              6     MOV R1, #61H
+0102 3130              7     CALL MODADD
+0104 313D              8     CALL MODSUB
+                       9     
+0106 80FE             10     HERE: SJMP HERE
+0130                  11     ORG 130H
+                      12     
+0130                  13     MODADD:
+0130 E570             14     MOV A, 70H
+0132 2571             15     ADD A, 71H  
+0134 F572             16     MOV 72H, A
+0136                  17     LOOP:
+0136 99               18         SUBB A, R1  
+0137 50FD             19         JNC LOOP
+0139 29               20         ADD A, R1  
+013A F572             21     MOV 72H, A
+013C 22               22     RET
+                      23     
+013D                  24     MODSUB:
+013D C3               25     CLR C
+013E E570             26     MOV A, 70H
+0140 9571             27     SUBB A, 71H  
+0142 F573             28     MOV 73H, A
+0144                  29     TEMP:
+0144 5001             30             JNC LOOP1
+0146 39               31             ADDC A, R1
+0147                  32     LOOP1:
+0147 99               33         SUBB A, R1  
+0148 50FD             34         JNC LOOP1
+014A 29               35         ADD A, R1  
+014B F573             36     MOV 73H, A
+014D 22               37     RET
+                      38     
+                      39     END
+A51 MACRO ASSEMBLER  Q1                                                                   02/09/2024 10:38:12 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+HERE . . . . . . .  C ADDR   0106H   A   
+LOOP . . . . . . .  C ADDR   0136H   A   
+LOOP1. . . . . . .  C ADDR   0147H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+MODADD . . . . . .  C ADDR   0130H   A   
+MODSUB . . . . . .  C ADDR   013DH   A   
+TEMP . . . . . . .  C ADDR   0144H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

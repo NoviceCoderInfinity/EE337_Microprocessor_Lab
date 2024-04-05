@@ -1,0 +1,55 @@
+C51 COMPILER V9.60.7.0   MAIN                                                              04/02/2024 16:27:53 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <stdio.h>
+   2          #include <at89c5131.h>
+   3          #include "serial.h" 
+   4          #include "mcp3008.h"
+   5          
+   6          void update_samples(float samples[8], float to_add);
+   7          float calculate_output(float samples[8], float coefficients_array[8]);
+   8          
+   9          void main(void) {
+  10   1          float coefficients_array[8] = {0.02017993, 0.06489484, 0.16638971, 0.24853553, 0.24853553, 0.16638971, 0
+             -.06489484, 0.02017993};
+  11   1          float samples[8] = {0};
+  12   1          
+  13   1          spi_init(); adc_init();
+  14   1          
+  15   1      }
+  16          
+  17          void update_samples(float samples[8], float to_add) {
+  18   1          int i;
+  19   1          for(i = 7; i > 0; --i) {
+  20   2                samples[i] = samples[i-1]; }
+  21   1          samples[0] = to_add;
+  22   1      }
+  23          
+  24          float calculate_output(float samples[8], float coefficients_array[8]) {
+  25   1          float output = 0; short iter;
+  26   1          for (iter = 0; iter < 8; ++iter) {
+  27   2              output += samples[iter] * coefficients_array[iter];
+  28   2          }
+  29   1          return output;
+  30   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    635    ----
+   CONSTANT SIZE    =     64    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1     104
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      3    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

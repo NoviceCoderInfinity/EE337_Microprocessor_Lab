@@ -1,0 +1,86 @@
+A51 MACRO ASSEMBLER  Q1                                                                   02/10/2024 09:28:27 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\Q1.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE Q1.asm SET(SMALL) DEBUG PRINT(.\Listings\Q1.lst) OBJECT(.\Objects\Q1.ob
+                      j) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+                       4     
+0100                   5     MAIN:
+0100 759000            6             MOV P1, #00H
+0103 3130              7             CALL delay_0_4ms
+0105 759001            8             MOV P1, #01H
+0108 3149              9             CALL delay_1_6ms
+010A 80F4             10             SJMP MAIN
+                      11     
+0130                  12     ORG 130H
+                      13     
+0130                  14     delay_0_4ms:
+0130 C000             15             PUSH 00H
+0132 7801             16             MOV R0, #1
+0134 7437             17             MOV A, #55
+0136 75F001           18             MOV B, #01H
+0139 A4               19             MUL AB
+013A 7570F4           20             H5: MOV 70H, #244
+013D 9401             21                     SUBB A, #1
+013F B400F8           22                     CJNE A, #00H, H5
+                      23                     
+0142 3162             24             H3: ACALL delay_250us
+0144 D8FC             25             DJNZ R0, H3
+0146 D000             26             POP 00H
+0148 22               27     RET
+                      28     
+0149                  29     delay_1_6ms:
+0149 C000             30             PUSH 00H
+014B 7806             31             MOV R0, #6
+014D 7437             32             MOV A, #55
+014F 75F001           33             MOV B, #01H
+0152 A4               34             MUL AB
+0153 7570F4           35             H6: MOV 70H, #244
+0156 9401             36                     SUBB A, #1
+0158 B400F8           37                     CJNE A, #00H, H6
+015B 3162             38             H2: ACALL delay_250us
+015D D8FC             39             DJNZ R0, H2
+015F D000             40             POP 00H
+0161 22               41     RET
+                      42     
+0162                  43     delay_250us:
+0162 C000             44     PUSH 00H
+0164 78F4             45     MOV R0, #244
+                      46     
+0166 D8FE             47     H1: DJNZ R0, H1
+0168 D000             48     POP 00H
+016A 22               49     RET
+                      50     
+                      51     END
+A51 MACRO ASSEMBLER  Q1                                                                   02/10/2024 09:28:27 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+DELAY_0_4MS. . . .  C ADDR   0130H   A   
+DELAY_1_6MS. . . .  C ADDR   0149H   A   
+DELAY_250US. . . .  C ADDR   0162H   A   
+H1 . . . . . . . .  C ADDR   0166H   A   
+H2 . . . . . . . .  C ADDR   015BH   A   
+H3 . . . . . . . .  C ADDR   0142H   A   
+H5 . . . . . . . .  C ADDR   013AH   A   
+H6 . . . . . . . .  C ADDR   0153H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

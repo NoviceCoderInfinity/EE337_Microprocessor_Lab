@@ -1,0 +1,62 @@
+A51 MACRO ASSEMBLER  MY_MIDSEM_SOLN                                                       02/10/2024 07:22:22 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+NO OBJECT MODULE REQUESTED
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE My_Midsem_Soln.asm SET(SMALL) DEBUG PRINT(.\Listings\My_Midsem_Soln.lst
+                      ) OBJECT(.\Objects\My_Midsem_Soln.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+                       4     
+0100                   5     MAIN:
+0100 7570D8            6             MOV 70H, #216
+0103 7571AD            7             MOV 71H, #173 
+0106 7A00              8             MOV R2, #00H
+                       9             
+0108 3130             10     CALL PVT_KEY_CALC
+010A 80FE             11     HERE: SJMP HERE
+                      12     
+0130                  13     ORG 130H
+                      14                     
+0130                  15             PVT_KEY_CALC:
+0130 7800             16                     MOV R0, #00H
+0132                  17                     LOOP:
+0132 C3               18                             CLR C
+0133 08               19                             INC R0
+0134 E570             20                             MOV A, 70H
+0136 88F0             21                             MOV B, R0
+0138 A4               22                             MUL AB
+0139 2401             23                             ADD A, #01H
+013B                  24                             TEST:
+013B 8571F0           25                                     MOV B, 71H
+013E 84               26                                     DIV AB
+013F                  27                                     CJNE B, #00H, LOOP
+*** ______________________________________________________________^
+*** ERROR #A39 IN 27 (My_Midsem_Soln.asm, LINE 27): REGISTER OPERAND EXPECTED
+013F F572             28                                     MOV 72H, A
+0141 22               29                     RET
+                      30     END
+A51 MACRO ASSEMBLER  MY_MIDSEM_SOLN                                                       02/10/2024 07:22:22 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+HERE . . . . . . .  C ADDR   010AH   A   
+LOOP . . . . . . .  C ADDR   0132H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+PVT_KEY_CALC . . .  C ADDR   0130H   A   
+TEST . . . . . . .  C ADDR   013BH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 1 ERROR(S)
